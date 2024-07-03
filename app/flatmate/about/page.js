@@ -4,16 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function AboutProperty() {
-  const [progress, setProgress] = useState(0);
 
-  const handleNextClick = () => {
-    setProgress((prev) => (prev < 100 ? prev + 10 : 100));
-  };
-
-  const handleBackClick = () => {
-    setProgress((prev) => (prev > 0 ? prev - 10 : 0));
-  };
-
+  const [selectedBedrooms, setSelectedBedrooms] = useState("");
+  const [selectedBathrooms, setSelectedBathrooms] = useState("");
+  
   return (
     <main className=" py-8">
       <div className=" ml-64 mx-10">
@@ -56,7 +50,12 @@ export default function AboutProperty() {
                       {["2", "3", "4", "5", "6+"].map((item) => (
                         <button
                           key={item}
-                          className="px-5 py-1 text-xs border border-gray-400"
+                          className={`px-5 py-1 text-xs border ${
+                            selectedBedrooms === item
+                              ? "bg-gray-200 border-blue-400"
+                              : "border-gray-400"
+                          }`}
+                          onClick={() => setSelectedBedrooms(item)}
                         >
                           {item}
                         </button>
@@ -74,7 +73,12 @@ export default function AboutProperty() {
                       {["1", "2", "3", "4+"].map((item) => (
                         <button
                           key={item}
-                          className="px-5 py-1 text-xs border border-gray-400"
+                          className={`px-5 py-1 text-xs border ${
+                            selectedBathrooms === item
+                              ? "bg-gray-200 border-blue-400"
+                              : "border-gray-400"
+                          }`}
+                          onClick={() => setSelectedBathrooms(item)}
                         >
                           {item}
                         </button>
@@ -88,7 +92,7 @@ export default function AboutProperty() {
                     <select className="mt-1 block w-full p-1 text-xs border border-gray-300 rounded-md">
                       <option>Two Wheeler</option>
                       <option>Four Wheeler</option>
-                      <option>not</option>
+                      <option>Not</option>
                     </select>
                   </div>
                   <div className="mt-2">
@@ -106,11 +110,10 @@ export default function AboutProperty() {
             </div>
           </div>
           <div className="fixed bottom-0 left-0 w-full">
-            <div className="h-1 bg-teal-500 w-[13.5%]" />
+            <div className="h-1 bg-teal-500 w-[14.28%]" />
             <div className="flex justify-between p-2 bg-gray-100 border-t border-gray-300">
               <Link href="/flatmate">
                 <button
-                  
                   className="px-2 py-2 bg-teal-500 text-white text-xs rounded hover:bg-teal-600 transition-colors"
                 >
                   Back
@@ -118,7 +121,6 @@ export default function AboutProperty() {
               </Link>
               <Link href="/flatmate/people">
                 <button
-                  
                   className="px-2 py-2 bg-teal-500 text-white text-xs rounded hover:bg-teal-600 transition-colors"
                 >
                   Next
