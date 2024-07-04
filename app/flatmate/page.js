@@ -1,14 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
+import FlatContext from "../context/flat/context";
 
 export default function Home() {
-  const [selectedContent, setSelectedContent] = useState(null);
+  const { flatDetails } = useContext(FlatContext);
+  const [selectedContent, setSelectedContent] = useState(
+    flatDetails.accommodationType
+  );
+  const [propertyType, setPropertyType] = useState(flatDetails.propertyType);
+  console.log(flatDetails);
 
   const handleButtonClick = (content) => {
     setSelectedContent(content);
-    console.log(selectedContent)
+  };
+
+  const handlePropertyTypeClick = (type) => {
+    setPropertyType(type);
   };
 
   const buttonCircleClasses = (content) =>
@@ -17,11 +26,6 @@ export default function Home() {
         ? "bg-blue-200 border-2 border-blue-500"
         : "bg-gray-200"
     }`;
-  const [propertyType, setPropertyType] = useState(null);
-
-  const handlePropertyTypeClick = (type) => {
-    setPropertyType(type);
-  };
 
   const propertyButtonClasses = (type) =>
     `px-4 py-2 border rounded ${
@@ -87,8 +91,7 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* selected content       selected content        selected content     */}
-              {selectedContent ?
+              {selectedContent && (
                 <div className="mt-4">
                   <h4 className="text-lg font-medium text-gray-900">
                     Type of property
@@ -107,17 +110,15 @@ export default function Home() {
                       Flat
                     </button>
                   </div>
-                </div>: ""
-              }
+                </div>
+              )}
             </div>
           </div>
         </div>
         <div className="fixed bottom-0 left-0 w-full">
           {selectedContent && <div className="h-1 bg-teal-500 w-[7.14%]" />}
           <div className="flex justify-between p-2 bg-gray-100 border-t border-gray-300">
-            
-              <div></div>
-           
+            <div></div>
             <Link href="/flatmate/about">
               {selectedContent && (
                 <button className="px-2 py-2 bg-teal-500 text-white text-xs rounded hover:bg-teal-600 transition-colors">

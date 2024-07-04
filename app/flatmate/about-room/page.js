@@ -1,20 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import FlatContext from "@/app/context/flat/context";
 
 export default function About() {
-  const [rooms, setRooms] = useState([{ roomName: "", roomType: "", roomFurnishings: "", bathroom: "" }]);
-
+  const { flatDetails, updateFlatDetails } = useContext(FlatContext);
+  const { rooms } = flatDetails;
+  console.log(flatDetails);
   const addRoom = () => {
-    setRooms([...rooms, { roomName: "", roomType: "", roomFurnishings: "", bathroom: "" }]);
+    const newRoom = { roomName: "", roomType: "", roomFurnishings: "", bathroom: "" };
+    updateFlatDetails({ rooms: [...rooms, newRoom] });
   };
 
   const handleRoomChange = (index, field, value) => {
     const updatedRooms = rooms.map((room, i) =>
-      i == index ? { ...room, [field]: value } : room
+      i === index ? { ...room, [field]: value } : room
     );
-    setRooms(updatedRooms);
+    updateFlatDetails({ rooms: updatedRooms });
   };
 
   return (
@@ -42,15 +45,19 @@ export default function About() {
                     </div>
                     <div className="mt-2">
                       <label className="block text-xs font-medium text-gray-700">Room Type</label>
-                      <div className="flex mt-1">
+                      <div className="flex mt-1 space-x-2">
                         <button
-                          className={`px-5 py-1 text-xs border ${room.roomType === "Private" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.roomType === "Private" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "roomType", "Private")}
                         >
                           Private
                         </button>
                         <button
-                          className={`px-5 py-1 text-xs border ${room.roomType === "Shared" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.roomType === "Shared" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "roomType", "Shared")}
                         >
                           Shared
@@ -59,21 +66,27 @@ export default function About() {
                     </div>
                     <div className="mt-2">
                       <label className="block text-xs font-medium text-gray-700">Room Furnishings</label>
-                      <div className="flex mt-1">
+                      <div className="flex mt-1 space-x-2">
                         <button
-                          className={`px-5 py-1 text-xs border ${room.roomFurnishings === "Flexible" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.roomFurnishings === "Flexible" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "roomFurnishings", "Flexible")}
                         >
                           Flexible
                         </button>
                         <button
-                          className={`px-5 py-1 text-xs border ${room.roomFurnishings === "Furnished" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.roomFurnishings === "Furnished" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "roomFurnishings", "Furnished")}
                         >
                           Furnished
                         </button>
                         <button
-                          className={`px-5 py-1 text-xs border ${room.roomFurnishings === "Unfurnished" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.roomFurnishings === "Unfurnished" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "roomFurnishings", "Unfurnished")}
                         >
                           Unfurnished
@@ -82,21 +95,27 @@ export default function About() {
                     </div>
                     <div className="mt-2">
                       <label className="block text-xs font-medium text-gray-700">Bathroom</label>
-                      <div className="flex mt-1">
+                      <div className="flex mt-1 space-x-2">
                         <button
-                          className={`px-5 py-1 text-xs border ${room.bathroom === "Shared" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.bathroom === "Shared" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "bathroom", "Shared")}
                         >
                           Shared
                         </button>
                         <button
-                          className={`px-5 py-1 text-xs border ${room.bathroom === "Own" ? "bg-gray-200  border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.bathroom === "Own" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "bathroom", "Own")}
                         >
                           Own
                         </button>
                         <button
-                          className={`px-5 py-1 text-xs border ${room.bathroom === "Ensuite" ? "bg-gray-200 border-blue-700" : "border-gray-400"}`}
+                          className={`px-5 py-1 text-xs border rounded ${
+                            room.bathroom === "Ensuite" ? "bg-gray-200 border-blue-700" : "border-gray-400"
+                          }`}
                           onClick={() => handleRoomChange(index, "bathroom", "Ensuite")}
                         >
                           Ensuite

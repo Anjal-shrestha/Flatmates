@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
-
-export default function Introduction() {
+import FlatContext from "@/app/context/flat/context";
+export default function PropertyIntroduction() {
+  const { flatDetails, updateFlatDetails } = useContext(FlatContext);
+  const { propertyintroduction } = flatDetails;
+  console.log(flatDetails);
+  const handleInputChange = (event) => {
+    updateFlatDetails({ propertyintroduction: event.target.value });
+  };
   return (
     <main className="py-7">
       <div className=" ml-64 mx-10">
@@ -15,11 +21,13 @@ export default function Introduction() {
         </h3>
       </div>
       <div className="flex items-center justify-center mt-5">
-        <div className="bg-gray-000 shadow-md rounded-md  max-w-lg w-full">
+      <div className="bg-gray-000 shadow-md rounded-md max-w-lg w-full">
           <textarea
-            className="  w-full  text-xs border border-gray-300 rounded-md p-2"
+            className="w-full text-xs border border-gray-300 rounded-md p-2"
             rows="10"
-            placeholder="What makes your share house shine? This will appear at the top of  your listing,so make it pop !"
+            placeholder="Everything you want"
+            value={propertyintroduction}
+            onChange={handleInputChange}
           />
         </div>
        
@@ -33,8 +41,8 @@ export default function Introduction() {
               Back
             </button>
           </Link>
-          <Link href="#">
-            <button className="px-2 py-2 bg-slate-300 text-white text-xs rounded">
+          <Link href="details">
+            <button className="px-2 py-2 bg-teal-500 text-white text-xs rounded">
               Next
             </button>
           </Link>

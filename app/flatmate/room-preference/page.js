@@ -1,14 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import FlatContext from "@/app/context/flat/context";
 
 export default function Preference() {
-  const [selectedPreference, setSelectedPreference] = useState("");
+
+  const { flatDetails, updateFlatDetails } = useContext(FlatContext);
+  const { preference } = flatDetails;
+  console.log(flatDetails);
+  const handlePreferenceClick = (value) => {
+    updateFlatDetails({ preference: value });
+  };
+
   return (
     <main className="py-7">
-      <div className=" ml-64 mx-10">
-        <p className="mt-1 text-xs font-light text-gray-500 uppercase ">
+      <div className="ml-64 mx-10">
+        <p className="mt-1 text-xs font-light text-gray-500 uppercase">
           Your ideal flatmate(s)
         </p>
         <h3 className="text-lg leading-6 font-medium text-blue-900">
@@ -29,11 +37,9 @@ export default function Preference() {
                 key={item}
                 type="button"
                 className={`px-4 py-2 my-2 text-xs font-medium rounded-md border border-gray-400 hover:bg-gray-200 hover:border-blue-500 ${
-                  selectedPreference === item
-                    ? "bg-gray-200 border-blue-500"
-                    : ""
+                  preference === item ? "bg-gray-200 border-blue-500" : ""
                 }`}
-                onClick={() => setSelectedPreference(item)}
+                onClick={() => handlePreferenceClick(item)}
               >
                 {item}
               </button>

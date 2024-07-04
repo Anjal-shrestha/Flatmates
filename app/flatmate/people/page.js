@@ -1,14 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import FlatContext from "@/app/context/flat/context";
 
 export default function People() {
-  const [selectedPeople, setSelectedPeople] = useState("");
+  const { flatDetails, updateFlatDetails } = useContext(FlatContext);
+  const { people } = flatDetails;
+  console.log(flatDetails);
+  const handlePeopleClick = (value) => {
+    updateFlatDetails({ people: value });
+  };
+
   return (
     <main className="py-8">
-      <div className=" ml-64 mx-10">
-        <p className="mt-1 text-sm text-gray-500 ">Describe Your Place</p>
+      <div className="ml-64 mx-10">
+        <p className="mt-1 text-sm text-gray-500">Describe Your Place</p>
         <h3 className="text-lg leading-6 font-medium text-blue-900">
           About the Flatmates
         </h3>
@@ -23,16 +30,16 @@ export default function People() {
                     <label className="block text-xs font-medium text-gray-700">
                       How many people will live in your home?
                     </label>
-                    <div className="flex mt-1 ">
+                    <div className="flex mt-1 space-x-2">
                       {["1", "2", "3", "4", "5", "6+"].map((item) => (
                         <button
                           key={item}
-                          className={`px-5 py-1 text-xs border  border-gray-400${
-                            selectedPeople === item
+                          className={`px-5 py-1 text-xs border rounded ${
+                            people === item
                               ? "bg-gray-200 border-blue-400"
                               : "border-gray-400"
                           }`}
-                          onClick={() => setSelectedPeople(item)}
+                          onClick={() => handlePeopleClick(item)}
                         >
                           {item}
                         </button>

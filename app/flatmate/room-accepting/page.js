@@ -1,30 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
+import FlatContext from "@/app/context/flat/context";
 
 export default function Accepting() {
-  const [selectedItems, setSelectedItems] = useState([]);
+  const { flatDetails, updateFlatDetails } = useContext(FlatContext);
+  const { accepting } = flatDetails;
 
+  console.log(flatDetails);
   const handleButtonClick = (item) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(selectedItems.filter((selected) => selected !== item));
+    if (accepting.includes(item)) {
+      updateFlatDetails({
+        accepting: accepting.filter((selected) => selected !== item),
+      });
     } else {
-      setSelectedItems([...selectedItems, item]);
+      updateFlatDetails({ accepting: [...accepting, item] });
     }
   };
 
   const buttonClasses = (item) =>
-    `flex flex-col items-center space-y-2 px-4 py-2 rounded border  ${
-      selectedItems.includes(item)
-        ? "bg-gray-200 border-teal-600"
-        : "bg-gray-000"
+    `flex flex-col items-center space-y-2 px-4 py-2 rounded border ${
+      accepting.includes(item) ? "bg-gray-200 border-teal-600" : "bg-gray-000"
     }`;
 
   return (
     <main className="py-7">
-      <div className=" ml-64 mx-10">
-        <p className="mt-1 text-xs font-light text-gray-500 uppercase ">
+      <div className="ml-64 mx-10">
+        <p className="mt-1 text-xs font-light text-gray-500 uppercase">
           Your ideal flatmate(s)
         </p>
         <h3 className="text-lg leading-6 font-medium text-blue-900">
@@ -65,12 +68,12 @@ export default function Accepting() {
       <div className="fixed bottom-0 left-0 w-full">
         <div className="h-1 bg-teal-500 w-[78.99%]" />
         <div className="flex justify-between p-2 bg-gray-100 border-t border-gray-300">
-          <Link href="room-preference">
+          <Link href="/flatmate/room-preference">
             <button className="px-2 py-2 bg-teal-500 text-white text-xs rounded hover:bg-teal-600 transition-colors">
               Back
             </button>
           </Link>
-          <Link href="room-description">
+          <Link href="/flatmate/room-description">
             <button className="px-2 py-2 bg-teal-500 text-white text-xs rounded hover:bg-teal-600 transition-colors">
               Next
             </button>
